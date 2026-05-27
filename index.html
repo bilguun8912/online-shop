@@ -3,67 +3,214 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Online Shop Login</title>
+<title>Modern Online Shop</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
 
 <style>
 
-body{
+*{
     margin:0;
+    padding:0;
+    box-sizing:border-box;
     font-family:Arial;
+}
+
+body{
+    background:#0f0f0f;
+    color:white;
+}
+
+/* HEADER */
+
+header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:20px 50px;
     background:#111;
+    position:sticky;
+    top:0;
+}
+
+.logo{
+    font-size:30px;
+    font-weight:bold;
+    color:#00ffcc;
+}
+
+nav a{
+    color:white;
+    text-decoration:none;
+    margin-left:20px;
+    transition:0.3s;
+}
+
+nav a:hover{
+    color:#00ffcc;
+}
+
+/* HERO */
+
+.hero{
+    height:90vh;
     display:flex;
     justify-content:center;
     align-items:center;
-    height:100vh;
+    flex-direction:column;
+    text-align:center;
+    background:linear-gradient(to right,#111,#1d1d1d);
 }
 
-.container{
-    width:350px;
-    background:white;
-    padding:30px;
+.hero h1{
+    font-size:70px;
+    margin-bottom:20px;
+}
+
+.hero p{
+    font-size:20px;
+    color:gray;
+}
+
+.hero button{
+    margin-top:30px;
+    padding:15px 40px;
+    border:none;
+    border-radius:30px;
+    background:#00ffcc;
+    color:black;
+    font-size:18px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.hero button:hover{
+    transform:scale(1.1);
+}
+
+/* PRODUCTS */
+
+.products{
+    padding:80px 50px;
+}
+
+.products h2{
+    text-align:center;
+    margin-bottom:50px;
+    font-size:40px;
+}
+
+.product-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:30px;
+}
+
+.card{
+    background:#1b1b1b;
     border-radius:20px;
-    box-shadow:0 0 20px black;
+    overflow:hidden;
+    transition:0.3s;
+    position:relative;
 }
 
-h1{
+.card:hover{
+    transform:translateY(-10px);
+    box-shadow:0 0 20px #00ffcc;
+}
+
+.card img{
+    width:100%;
+    height:250px;
+    object-fit:cover;
+}
+
+.card-content{
+    padding:20px;
+}
+
+.card h3{
+    margin-bottom:10px;
+}
+
+.price{
+    color:#00ffcc;
+    font-size:20px;
+    margin-bottom:15px;
+}
+
+.buy-btn{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:10px;
+    background:#00ffcc;
+    color:black;
+    font-weight:bold;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.buy-btn:hover{
+    background:white;
+}
+
+/* LOGIN */
+
+.modal{
+    position:fixed;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.8);
+    display:none;
+    justify-content:center;
+    align-items:center;
+}
+
+.modal-box{
+    background:#1b1b1b;
+    padding:30px;
+    width:350px;
+    border-radius:20px;
+}
+
+.modal-box h2{
+    margin-bottom:20px;
     text-align:center;
 }
 
-input{
+.modal-box input{
     width:100%;
     padding:12px;
     margin-top:10px;
+    border:none;
     border-radius:10px;
-    border:1px solid gray;
-    box-sizing:border-box;
 }
 
-button{
+.modal-box button{
     width:100%;
     padding:12px;
     margin-top:15px;
     border:none;
     border-radius:10px;
-    background:black;
-    color:white;
-    font-size:16px;
+    background:#00ffcc;
     cursor:pointer;
+    font-weight:bold;
 }
 
-button:hover{
-    background:#444;
-}
-
-.toggle{
-    text-align:center;
-    margin-top:15px;
+.close{
+    float:right;
     cursor:pointer;
-    color:blue;
+    font-size:22px;
 }
 
-#welcome{
-    display:none;
+/* FOOTER */
+
+footer{
     text-align:center;
+    padding:30px;
+    background:#111;
+    color:gray;
 }
 
 </style>
@@ -71,56 +218,123 @@ button:hover{
 
 <body>
 
-<div class="container">
+<header>
+    <div class="logo">NEON SHOP</div>
 
-    <div id="authBox">
+    <nav>
+        <a href="#">Home</a>
+        <a href="#products">Products</a>
+        <a href="#" onclick="openModal()">Login</a>
+    </nav>
+</header>
 
-        <h1 id="title">Login</h1>
+<section class="hero">
+    <h1>Future Shopping</h1>
+    <p>Modern Gaming & Tech Products</p>
 
-        <input type="text" id="username" placeholder="Username">
+    <button onclick="scrollProducts()">
+        Shop Now
+    </button>
+</section>
 
-        <input type="password" id="password" placeholder="Password">
+<section class="products" id="products">
 
-        <button onclick="submitForm()">Login</button>
+    <h2>Top Products</h2>
 
-        <div class="toggle" onclick="toggleForm()">
-            Don't have an account? Sign Up
+    <div class="product-grid">
+
+        <div class="card">
+            <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9">
+
+            <div class="card-content">
+                <h3>iPhone</h3>
+                <div class="price">$999</div>
+
+                <button class="buy-btn"
+                onclick="buyProduct('iPhone')">
+                    Buy Now
+                </button>
+            </div>
+        </div>
+
+        <div class="card">
+            <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff">
+
+            <div class="card-content">
+                <h3>Nike Shoes</h3>
+                <div class="price">$120</div>
+
+                <button class="buy-btn"
+                onclick="buyProduct('Nike Shoes')">
+                    Buy Now
+                </button>
+            </div>
+        </div>
+
+        <div class="card">
+            <img src="https://images.unsplash.com/photo-1587202372775-e229f172b9d7">
+
+            <div class="card-content">
+                <h3>Gaming Keyboard</h3>
+                <div class="price">$80</div>
+
+                <button class="buy-btn"
+                onclick="buyProduct('Keyboard')">
+                    Buy Now
+                </button>
+            </div>
         </div>
 
     </div>
 
-    <div id="welcome">
-        <h1>Welcome!</h1>
-        <p id="welcomeText"></p>
+</section>
 
-        <button onclick="logout()">Logout</button>
+<!-- LOGIN MODAL -->
+
+<div class="modal" id="modal">
+
+    <div class="modal-box">
+
+        <span class="close"
+        onclick="closeModal()">✖</span>
+
+        <h2>Login</h2>
+
+        <input type="text"
+        id="username"
+        placeholder="Username">
+
+        <input type="password"
+        id="password"
+        placeholder="Password">
+
+        <button onclick="login()">
+            Login
+        </button>
+
     </div>
 
 </div>
 
+<footer>
+    2026 NEON SHOP
+</footer>
+
 <script>
 
-let isLogin = true;
+/* MODAL */
 
-function toggleForm(){
-
-    isLogin = !isLogin;
-
-    if(isLogin){
-        document.getElementById("title").innerText = "Login";
-        document.querySelector("button").innerText = "Login";
-        document.querySelector(".toggle").innerText =
-        "Don't have an account? Sign Up";
-    }
-    else{
-        document.getElementById("title").innerText = "Sign Up";
-        document.querySelector("button").innerText = "Sign Up";
-        document.querySelector(".toggle").innerText =
-        "Already have an account? Login";
-    }
+function openModal(){
+    document.getElementById("modal").style.display="flex";
 }
 
-function submitForm(){
+function closeModal(){
+    document.getElementById("modal").style.display="none";
+}
+
+/* LOGIN */
+
+function login(){
 
     let username =
     document.getElementById("username").value;
@@ -128,54 +342,39 @@ function submitForm(){
     let password =
     document.getElementById("password").value;
 
-    if(username === "" || password === ""){
-        alert("Please fill all fields");
+    if(username==="" || password===""){
+        alert("Fill all fields");
         return;
     }
 
-    if(isLogin){
+    localStorage.setItem("user",username);
 
-        let savedUser =
-        localStorage.getItem("username");
+    alert("Welcome " + username);
 
-        let savedPass =
-        localStorage.getItem("password");
+    closeModal();
+}
 
-        if(username === savedUser &&
-           password === savedPass){
+/* BUY */
 
-            showWelcome(username);
+function buyProduct(product){
 
-        }else{
-            alert("Wrong username or password");
-        }
+    let user = localStorage.getItem("user");
 
+    if(user==null){
+        alert("Please login first");
     }else{
-
-        localStorage.setItem("username", username);
-        localStorage.setItem("password", password);
-
-        alert("Account created!");
-
-        toggleForm();
+        alert(user + " bought " + product);
     }
 }
 
-function showWelcome(username){
+/* SCROLL */
 
-    document.getElementById("authBox").style.display = "none";
+function scrollProducts(){
 
-    document.getElementById("welcome").style.display = "block";
-
-    document.getElementById("welcomeText").innerText =
-    "Hello, " + username;
-}
-
-function logout(){
-
-    document.getElementById("authBox").style.display = "block";
-
-    document.getElementById("welcome").style.display = "none";
+    document.getElementById("products")
+    .scrollIntoView({
+        behavior:"smooth"
+    });
 }
 
 </script>
